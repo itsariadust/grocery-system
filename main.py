@@ -44,7 +44,7 @@ class GrocerySystem:
                         ),
         ]
         answers = inquirer.prompt(options)
-        self.handle_choice(answers['choice'])
+        self.option_handler(answers['choice'])
     
     def option_handler(self, choice):
         if choice == 'Add Item to Inventory':
