@@ -24,6 +24,7 @@ class GrocerySystem:
                 'Edit Item in Inventory',
                 'Delete Item in Inventory',
                 'View Inventory',
+                'Manage Users',
                 'Exit Program',
             ]
         elif self.role == "user":
@@ -47,17 +48,21 @@ class GrocerySystem:
         self.option_handler(answers['choice'])
     
     def option_handler(self, choice):
-        if choice == 'Add Item to Inventory':
-            self.add_item()
-        elif choice == 'Edit Item in Inventory':
-            self.edit_item()
-        elif choice == 'Delete Item in Inventory':
-            self.delete_item()
-        elif choice == 'View Inventory':
-            self.view_inventory()
-        elif choice == 'Exit Program':
-            print("Goodbye!")
-            exit()
+        match choice:
+            case 'Add Item to Inventory':
+                self.add_item()
+            case 'Edit Item in Inventory':
+                self.edit_item()
+            case 'Delete Item in Inventory':
+                self.delete_item()
+            case 'View Inventory':
+                self.view_inventory()
+            case 'Exit Program':
+                print("Goodbye!")
+                exit()
+            case _:
+                print("Invalid choice. Please try again.")
+
 
 def main():
     GrocerySystem()
