@@ -20,15 +20,15 @@ class Auth:
             print("Invalid Username.")
             exit()
 
-        db_pass, db_role = db_credentials
+        hashed_pass, role = db_credentials
 
-        if not bcrypt.checkpw(password.encode(), db_pass.encode()):
+        if not bcrypt.checkpw(password.encode(), hashed_pass.encode()):
             print("Authentication failed: Invalid password.")
             exit()
 
         print(f"Welcome! {username}")
 
-        return True
+        return username, role
 
 
         
