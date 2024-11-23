@@ -27,6 +27,14 @@ class GrocerySystem:
                 'Manage Users',
                 'Exit Program',
             ]
+        elif self.role == "stock_mngr":
+            options_list = [
+                'Add Item to Inventory',
+                'Edit Item in Inventory',
+                'Delete Item in Inventory',
+                'View Inventory',
+                'Exit Program',
+            ]
         elif self.role == "user":
             options_list = [
                 'View Inventory',
