@@ -16,6 +16,7 @@ class GrocerySystem:
         self.username, self.role = user
 
         self.menu()
+        exit()
 
     def menu(self):
         if self.role == "admin":
@@ -52,8 +53,9 @@ class GrocerySystem:
                         choices=options_list,
                         ),
         ]
-        answers = inquirer.prompt(options)
-        self.option_handler(answers['choice'])
+        while True:
+            answers = inquirer.prompt(options)
+            self.option_handler(answers['choice'])
     
     def option_handler(self, choice):
         match choice:
