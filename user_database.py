@@ -1,13 +1,12 @@
 import sqlite3
 import bcrypt
-import os
 
 class UserDB:
     @staticmethod
     def initialize_db():
         # Connect to SQLite database
-        db = sqlite3.connect("users.db")
-        cursor = db.cursor()
+        user_db = sqlite3.connect("users.db")
+        cursor = user_db.cursor()
 
         # Create users table
         cursor.execute("""
@@ -28,16 +27,16 @@ class UserDB:
             VALUES (?, ?, ?)
         """, add_admin)
 
-        db.commit()
-        db.close()
+        user_db.commit()
+        user_db.close()
 
     @staticmethod
     def get_credentials_from_db(username):
-        db = sqlite3.connect("users.db")
-        cursor = db.cursor()
+        user_db = sqlite3.connect("users.db")
+        cursor = user_db.cursor()
 
         cursor.execute("SELECT hashed_password, role FROM users WHERE username = ?", (username,))
         credentials = cursor.fetchone()
-        db.close()
+        user_db.close()
 
         return credentials
