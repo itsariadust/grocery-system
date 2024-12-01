@@ -3,7 +3,7 @@ import bcrypt
 
 class UserDB:
     @staticmethod
-    def initialize_db():
+    def user_db_init():
         # Connect to SQLite database
         user_db = sqlite3.connect("users.db")
         cursor = user_db.cursor()
@@ -30,13 +30,4 @@ class UserDB:
         user_db.commit()
         user_db.close()
 
-    @staticmethod
-    def get_credentials_from_db(username):
-        user_db = sqlite3.connect("users.db")
-        cursor = user_db.cursor()
-
-        cursor.execute("SELECT hashed_password, role FROM users WHERE username = ?", (username,))
-        credentials = cursor.fetchone()
-        user_db.close()
-
-        return credentials
+    

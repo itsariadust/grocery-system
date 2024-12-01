@@ -1,15 +1,20 @@
 import inquirer
 from auth_user import Auth
 from user_database import UserDB
+from manage_users import ManageUsers
 import os
 
 class GrocerySystem:
     def __init__(self) -> None:
-        if not os.path.exists("users.db"):
-            print("Database not found. Creating 'users.db'...")
-            UserDB.initialize_db()
+        if not os.path.exists("inventory.db"):
+            print("Inventory database not found. Creating 'inventory.db'...")
+            InventoryDB().inventory_db_init()
 
-        user = Auth.get_credentials()
+        if not os.path.exists("users.db"):
+            print("User database not found. Creating 'users.db'...")
+            UserDB().user_db_init()
+
+        user = Auth().get_credentials()
         if not user:
             exit()
 
