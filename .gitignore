@@ -1,3 +1,2 @@
 __pycache__
-./inventory.db
-./users.db
+*.db
