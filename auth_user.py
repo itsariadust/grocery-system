@@ -6,8 +6,8 @@ from user_database import UserDB
 class Auth:
     def get_credentials(self):
         questions = [
-            inquirer.Text('username', message="Username: "),
-            inquirer.Password('password', message="Password: "),
+            inquirer.Text('username', message="Username"),
+            inquirer.Password('password', message="Password"),
         ]
         credentials = inquirer.prompt(questions)
 
