@@ -1,9 +1,11 @@
 import sqlite3
 import inquirer
+import uuid
 
 class AddItem:
     def __init__(self) -> None:
         pass
+
     def item_constructor(self):
         item_form = [
             inquirer.Text('name','Enter item name'),
@@ -21,6 +23,7 @@ class AddItem:
             # expiry_date_obj = datetime.strptime(expiry_date['expiry_date'],'%m-%d-%Y')
             # I wasted so much time writing that line lmao
             item.update(expiry_date)
+            item.update({"id":f'{uuid.uuid1()}'})
 
     
         self.insert_item_into_db(item)
@@ -30,8 +33,8 @@ class AddItem:
         cursor = inventory_db.cursor()
 
         cursor.execute('''
-            INSERT INTO inventory (name, category, weight, quantity, perishable, expiry_date)
-            VALUES (:name, :category, :weight, :quantity, :perishable, :expiry_date)
+            INSERT INTO inventory (id, name, category, weight, quantity, perishable, expiry_date)
+            VALUES (:id, :name, :category, :weight, :quantity, :perishable, :expiry_date)
         ''', item)
 
         inventory_db.commit()

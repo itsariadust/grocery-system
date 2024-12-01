@@ -10,7 +10,8 @@ class InventoryDB:
         # Create users table
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS inventory (
-                name TEXT PRIMARY KEY,
+                id TEXT PRIMARY KEY,
+                name TEXT NOT NULL,
                 category TEXT,
                 weight REAL,
                 quantity INTEGER NOT NULL,
