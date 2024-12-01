@@ -1,7 +1,9 @@
 import inquirer
 from auth_user import Auth
 from user_database import UserDB
+from inventory_database import InventoryDB
 from manage_users import ManageUsers
+from add_item import AddItem
 import os
 
 class GrocerySystem:
@@ -65,7 +67,7 @@ class GrocerySystem:
     def option_handler(self, choice):
         match choice:
             case 'Add Item to Inventory':
-                self.add_item()
+                AddItem().item_constructor()
             case 'Edit Item in Inventory':
                 self.edit_item()
             case 'Delete Item in Inventory':
