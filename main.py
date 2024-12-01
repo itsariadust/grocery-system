@@ -67,6 +67,9 @@ class GrocerySystem:
                 self.delete_item()
             case 'View Inventory':
                 self.view_inventory()
+            case 'Manage Users':
+                user_mngr = ManageUsers()
+                user_mngr.user_constructor()
             case 'Exit Program':
                 print("Goodbye!")
                 exit()
