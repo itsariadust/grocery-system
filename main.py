@@ -4,6 +4,7 @@ from user_database import UserDB
 from inventory_database import InventoryDB
 from manage_users import ManageUsers
 from add_item import AddItem
+from view_inventory import ViewInventory
 import os
 
 class GrocerySystem:
@@ -73,7 +74,7 @@ class GrocerySystem:
             case 'Delete Item in Inventory':
                 self.delete_item()
             case 'View Inventory':
-                self.view_inventory()
+                ViewInventory().view_inventory()
             case 'Manage Users':
                 user_mngr = ManageUsers()
                 user_mngr.user_constructor()
