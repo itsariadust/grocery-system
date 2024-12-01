@@ -22,29 +22,26 @@ class ManageUsers:
                         choices=options_list,
                         ),
         ]
-
-        answers = inquirer.prompt(options)
-        self.option_handler(answers['choice'])
+        while True:
+            answers = inquirer.prompt(options)
+            if self.option_handler(answers['choice']):
+                break
     
     def option_handler(self, choice):
-        while True:
-            flag = False
-            match choice:
-                case 'Add User':
-                    self.add_user()
-                case 'Edit User':
-                    self.edit_user()
-                case 'Delete User':
-                    self.delete_user()
-                case 'View Users':
-                    self.view_users()
-                case 'Exit':
-                    print("Closing...")
-                    flag = True
-                case _:
-                    print("Invalid choice. Please try again.")
-            if flag is True:
-                break
+        match choice:
+            case 'Add User':
+                self.add_user()
+            case 'Edit User':
+                self.edit_user()
+            case 'Delete User':
+                self.delete_user()
+            case 'View Users':
+                self.view_users()
+            case 'Exit':
+                return True
+            case _:
+                print("Invalid choice. Please try again.")
+
 
     def add_user(self):
         user_db = sqlite3.connect("users.db")
