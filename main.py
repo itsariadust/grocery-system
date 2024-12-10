@@ -3,7 +3,6 @@ from auth_user import Auth
 from edit_item import EditItem
 from user_database import UserDB
 from inventory_database import InventoryDB
-from manage_users import ManageUsers
 from add_item import AddItem
 from view_inventory import ViewInventory
 from delete_item import DeleteItem
@@ -38,19 +37,6 @@ class GrocerySystem:
                 'Manage Users',
                 'Exit Program',
             ]
-        elif self.role == "stock_mngr":
-            options_list = [
-                'Add Item to Inventory',
-                'Edit Item in Inventory',
-                'Delete Item in Inventory',
-                'View Inventory',
-                'Exit Program',
-            ]
-        elif self.role == "user":
-            options_list = [
-                'View Inventory',
-                'Exit Program',
-            ]
         else:
             print("Unknown role. Exiting.")
             exit()
@@ -77,9 +63,6 @@ class GrocerySystem:
                 DeleteItem().remove_item()
             case 'View Inventory':
                 ViewInventory().view_inventory()
-            case 'Manage Users':
-                user_mngr = ManageUsers()
-                user_mngr.user_constructor()
             case 'Exit Program':
                 print("Goodbye!")
                 exit()
