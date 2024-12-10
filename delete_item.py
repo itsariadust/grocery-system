@@ -1,6 +1,4 @@
-import sqlite3
 import inquirer
-from tabulate import tabulate
 from inventory_database import InventoryDB
 
 class DeleteItem:
