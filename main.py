@@ -1,5 +1,6 @@
 import inquirer
 from auth_user import Auth
+from edit_item import EditItem
 from user_database import UserDB
 from inventory_database import InventoryDB
 from manage_users import ManageUsers
@@ -71,7 +72,7 @@ class GrocerySystem:
             case 'Add Item to Inventory':
                 AddItem().item_constructor()
             case 'Edit Item in Inventory':
-                self.edit_item()
+                EditItem().edit_item()
             case 'Delete Item in Inventory':
                 DeleteItem().remove_item()
             case 'View Inventory':

@@ -1,6 +1,7 @@
 import sqlite3
 from tabulate import tabulate
 import inquirer
+from item import Item
 
 class InventoryDB:
     def __init__(self, db_path='inventory.db'):
@@ -8,8 +9,8 @@ class InventoryDB:
         self.inventory_db_init()
 
     def inventory_db_init(self):
-        inv_db = sqlite3.connect("inventory.db")
-        cursor = inv_db.cursor()
+        inventory_db = sqlite3.connect(self.db_path)
+        cursor = inventory_db.cursor()
 
         # Create users table
         cursor.execute("""
@@ -24,11 +25,11 @@ class InventoryDB:
             )
         """)
 
-        inv_db.commit()
-        inv_db.close()
+        inventory_db.commit()
+        inventory_db.close()
     
     def insert_item(self, item):
-        inventory_db = sqlite3.connect('inventory.db')
+        inventory_db = sqlite3.connect(self.db_path)
         cursor = inventory_db.cursor()
 
         cursor.execute('''
@@ -43,6 +44,12 @@ class InventoryDB:
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM inventory WHERE name = ?", (item_name,))
+            return cursor.fetchall()
+
+    def get_items_by_id(self, item_id):
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM inventory WHERE id = ?", (item_id,))
             return cursor.fetchall()
 
     def delete_item_by_name(self, item_name):
@@ -74,5 +81,17 @@ class InventoryDB:
         item_id = inquirer.text(message="ID")
         return item_id
 
-    def edit_item(self):
-        print("Something")
+    def edit_item(self, item):
+        print(item)
+        inventory_db = sqlite3.connect(self.db_path)
+        cursor = inventory_db.cursor()
+        try:
+            cursor.execute('''
+                UPDATE inventory
+                SET name = :name, category = :category, weight = :weight, quantity = :quantity, perishable = :perishable, expiry_date = :expiry_date
+                WHERE id = :id
+            ''', item)
+        except sqlite3.Error as e:
+            print("SQLite error:", e)
+        inventory_db.commit()
+        inventory_db.close()
