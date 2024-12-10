@@ -1,0 +1,11 @@
+bcrypt==4.2.1
+blessed==1.20.0
+editor==1.6.6
+inquirer==3.4.0
+readchar==4.2.1
+runs==1.2.2
+shortuuid==1.0.13
+six==1.16.0
+tabulate==0.9.0
+wcwidth==0.2.13
+xmod==1.8.1
