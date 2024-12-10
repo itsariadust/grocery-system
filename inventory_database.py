@@ -1,5 +1,4 @@
 import sqlite3
-import bcrypt
 from tabulate import tabulate
 import inquirer
 
@@ -40,45 +39,40 @@ class InventoryDB:
         inventory_db.commit()
         inventory_db.close()
 
-    def delete_item(self, item):
-        inventory_db = sqlite3.connect("inventory.db")
-        cursor = inventory_db.cursor()
+    def get_items_by_name(self, item_name):
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM inventory WHERE name = ?", (item_name,))
+            return cursor.fetchall()
 
-        cursor.execute("SELECT * FROM inventory WHERE name = ?", (item,))
+    def delete_item_by_name(self, item_name):
+        confirm = inquirer.confirm(message=f"Are you sure you want to delete '{item_name}'?")
+        if confirm:
+            inventory_db = sqlite3.connect(self.db_path)
+            cursor = inventory_db.cursor()
+            cursor.execute("DELETE FROM inventory WHERE id = ?", (item_name[1],))
+            inventory_db.commit()
+            inventory_db.close()
 
-        results = cursor.fetchall()
-
-        if not results:
-            print(f"No items found with the name '{item}'.")
-            return
-
-        if len(results) > 1:
-            item_id = self._duplicate_items(results)
-            confirm = inquirer.confirm("Are you sure that you want to delete this item?")
-
-            if confirm:
-                cursor.execute("DELETE FROM inventory WHERE ID = ?", (item_id,))
-                print("Item deleted successfully.")
-                inventory_db.commit()
-                inventory_db.close()
-        else:
-            confirm = inquirer.confirm("Are you sure that you want to delete this item?")
-            if confirm:
-                single_item = results[0][1]
-                cursor.execute("DELETE FROM inventory WHERE Name = ?", (single_item,))
-                print("Item deleted successfully.")
-                inventory_db.commit()
-                inventory_db.close()
+    def delete_item_by_id(self, item_id):
+        confirm = inquirer.confirm(message=f"Are you sure you want to delete '{item_id}'?")
+        if confirm:
+            inventory_db = sqlite3.connect(self.db_path)
+            cursor = inventory_db.cursor()
+            cursor.execute("DELETE FROM inventory WHERE id = ?", (item_id,))
+            inventory_db.commit()
+            inventory_db.close()
     
-    def _duplicate_items(self, results):
+    def handle_duplicates(self, results):
         duplicate_items = {"ID": [], "Name": []}
 
         for row in results:
             duplicate_items["ID"].append(row[0])
             duplicate_items["Name"].append(row[1])
 
-        print("There are duplicate items. Enter the ID of the item that you wish to remove.")
         print(tabulate(duplicate_items))
         item_id = inquirer.text(message="ID")
         return item_id
-        
+
+    def edit_item(self):
+        print("Something")

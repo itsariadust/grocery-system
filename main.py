@@ -73,7 +73,7 @@ class GrocerySystem:
             case 'Edit Item in Inventory':
                 self.edit_item()
             case 'Delete Item in Inventory':
-                DeleteItem().item_remover()
+                DeleteItem().remove_item()
             case 'View Inventory':
                 ViewInventory().view_inventory()
             case 'Manage Users':
