@@ -40,24 +40,24 @@ class InventoryDB:
         inventory_db.commit()
         inventory_db.close()
 
-    def delete_item(self, item_name):
+    def delete_item(self, item):
         inventory_db = sqlite3.connect("inventory.db")
         cursor = inventory_db.cursor()
 
-        cursor.execute("SELECT * FROM inventory WHERE name = ?", (item_name,))
+        cursor.execute("SELECT * FROM inventory WHERE name = ?", (item,))
 
         results = cursor.fetchall()
 
         if not results:
-            print(f"No items found with the name '{item_name}'.")
+            print(f"No items found with the name '{item}'.")
             return
 
         if len(results) > 1:
-            item = self._duplicate_items(results)
+            item_id = self._duplicate_items(results)
             confirm = inquirer.confirm("Are you sure that you want to delete this item?")
 
             if confirm:
-                cursor.execute("DELETE FROM inventory WHERE ID = ?", (item,))
+                cursor.execute("DELETE FROM inventory WHERE ID = ?", (item_id,))
                 print("Item deleted successfully.")
                 inventory_db.commit()
                 inventory_db.close()
