@@ -1,10 +1,11 @@
-import sqlite3
 import inquirer
 import uuid
+from inventory_database import InventoryDB
+from item import Item
 
 class AddItem:
-    def __init__(self) -> None:
-        pass
+    def __init__(self):
+        self.db = InventoryDB()
 
     def item_constructor(self):
         item_form = [
@@ -14,28 +15,21 @@ class AddItem:
             inquirer.Text('quantity','Enter the number of items currently present in the inventory'),
             inquirer.Confirm(name='perishable', message='Is the item perishable?'),
         ]
-        item = inquirer.prompt(item_form)
-        if item['perishable']:
+        item_data = inquirer.prompt(item_form)
+        expiry_date = None
+        if item_data['perishable']:
             expiry_date_prompt = [
                 inquirer.Text('expiry_date','Enter expiry date (In MM-DD-YYYY format)')
             ]
-            expiry_date = inquirer.prompt(expiry_date_prompt)
-            # expiry_date_obj = datetime.strptime(expiry_date['expiry_date'],'%m-%d-%Y')
-            # I wasted so much time writing that line lmao
-            item.update(expiry_date)
-            item.update({"id":f'{uuid.uuid1()}'})
+            expiry_date_data = inquirer.prompt(expiry_date_prompt)
+            expiry_date = expiry_date_data['expiry_date']
 
-    
-        self.insert_item_into_db(item)
-    
-    def insert_item_into_db(self, item):
-        inventory_db = sqlite3.connect('inventory.db')
-        cursor = inventory_db.cursor()
-
-        cursor.execute('''
-            INSERT INTO inventory (id, name, category, weight, quantity, perishable, expiry_date)
-            VALUES (:id, :name, :category, :weight, :quantity, :perishable, :expiry_date)
-        ''', item)
-
-        inventory_db.commit()
-        inventory_db.close()
+        item = Item(
+            name=item_data['name'],
+            category=item_data['category'],
+            weight=item_data['weight'],
+            quantity=int(item_data['quantity']),
+            perishable=item_data['perishable'],
+            expiry_date=expiry_date
+        )
+        self.db.insert_item(item)
