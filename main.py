@@ -34,7 +34,6 @@ class GrocerySystem:
                 'Edit Item in Inventory',
                 'Delete Item in Inventory',
                 'View Inventory',
-                'Manage Users',
                 'Exit Program',
             ]
         else:

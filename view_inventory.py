@@ -11,6 +11,7 @@ class ViewInventory:
 
         cursor.execute("SELECT * FROM inventory")
         data = cursor.fetchall()
-        print(tabulate(data, headers=["ID", "Name", "Category", "Weight", "Quantity", "Perishable?", "Expiry Date"], tablefmt="grid"))
+        print(tabulate(data, headers=["ID", "Name", "Category", "Weight",
+                                      "Quantity", "Perishable?", "Expiry Date"], tablefmt="grid"))
         inv_db.commit()
         inv_db.close()
